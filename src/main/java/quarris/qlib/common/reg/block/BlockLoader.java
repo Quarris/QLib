@@ -23,9 +23,18 @@ public class BlockLoader extends ContentLoader<Block, BlockRegistry> {
         }
         BLOCKS.add(block);
 
-        if (block instanceof IHasBlockItem) {
-            BlockItem item = ((IHasBlockItem) block).createItem();
-            item.setRegistryName(block.getRegistryName());
+        if (!(block instanceof IHasNoBlockItem)) {
+            BlockItem item;
+            if (block instanceof IHasCustomBlockItem) {
+                item = ((IHasCustomBlockItem) block).createItem();
+            } else {
+                item = new BlockItem(block, new Item.Properties());
+            }
+
+            if (item.getRegistryName() == null) {
+                item.setRegistryName(block.getRegistryName());
+            }
+
             BLOCK_ITEMS.add(item);
         }
     }
