@@ -16,10 +16,3 @@ issueTrackerURL="https://github.com/Quarris/qlib/issues" #optional
     authors="Quarris" #optional
     # The description text for the mod (multi line!) (#mandatory)
     description='''QLib is a library mod used for mods developed by Quarris.'''
-
-[[mods]]
-    modId="qlibdemo"
-    version="0.1"
-    displayName="QLib Demo"
-    authors="Quarris"
-    description='''Mod used as testing and debugging QLib library mod'''
