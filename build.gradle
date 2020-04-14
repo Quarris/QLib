@@ -17,21 +17,16 @@ version = '0.1'
 group = 'quarris.qlib' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'qlib'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+if (System.getenv('BUILD_NUMBER') != null) {
+    version += "." + System.getenv('BUILD_NUMBER')
+}
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    // The mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   Snapshot are built nightly.
-    // stable_#            Stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not always work.
-    // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'snapshot', version: '20200225-1.15.1'
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-    
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
+    mappings channel: 'snapshot', version: '20200225-1.15.1'
+    
     runs {
         client {
             workingDirectory project.file('run')
@@ -89,7 +84,6 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.15.2-31.1.44'
 }
 
-// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
         attributes([
@@ -104,21 +98,36 @@ jar {
     }
 }
 
-// Example configuration to allow publishing using the maven-publish task
-// This is the preferred method to reobfuscate your jar file
-jar.finalizedBy('reobfJar') 
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-//publish.dependsOn('reobfJar')
+task deobfJar(type: Jar) {
+    from(sourceSets.main.output)
+    archiveName = "${baseName}-${version}-deobf.${extension}"
+}
+
+artifacts {
+    archives deobfJar
+}
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact jar
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
+            from components.java
+
+            artifact deobfJar {
+                classifier 'deobf'
+            }
+            pom.withXml {
+                def node = asNode()
+                if(node.dependencies.size() > 0)
+                    node.remove(node.dependencies) // Remove deps, as they are all mappings-dependent and/or forge
+            }
         }
     }
     repositories {
         maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
+            url "file://" + System.getenv("local_maven")
         }
     }
 }
