@@ -1,7 +1,7 @@
 package quarris.qlibdemo.item;
 
 import net.minecraft.item.Item;
-import quarris.qlib.common.content.item.ItemRegistry;
+import quarris.qlib.common.reg.item.ItemRegistry;
 import quarris.qlibdemo.QLibDemo;
 
 @ItemRegistry(QLibDemo.MODID)
