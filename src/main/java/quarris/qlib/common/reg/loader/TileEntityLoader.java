@@ -1,4 +1,4 @@
-package quarris.qlib.common.reg.tileentity;
+package quarris.qlib.common.reg.loader;
 
 import net.minecraft.tileentity.TileEntityType;
 import quarris.qlib.common.reg.ContentLoader;

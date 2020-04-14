@@ -8,10 +8,10 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import quarris.qlib.QLib;
-import quarris.qlib.common.reg.block.BlockLoader;
-import quarris.qlib.common.reg.container.ContainerLoader;
-import quarris.qlib.common.reg.item.ItemLoader;
-import quarris.qlib.common.reg.tileentity.TileEntityLoader;
+import quarris.qlib.common.reg.loader.BlockLoader;
+import quarris.qlib.common.reg.loader.ContainerLoader;
+import quarris.qlib.common.reg.loader.ItemLoader;
+import quarris.qlib.common.reg.loader.TileEntityLoader;
 
 @SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = QLib.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)

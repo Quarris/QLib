@@ -1,4 +1,4 @@
-package quarris.qlib.common.reg.container;
+package quarris.qlib.common.reg.loader;
 
 import net.minecraft.inventory.container.ContainerType;
 import quarris.qlib.common.reg.ContentLoader;

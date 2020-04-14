@@ -1,4 +1,4 @@
-package quarris.qlib.common.reg.tileentity;
+package quarris.qlib.common.reg.registry;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,10 +7,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
-public @interface TileRegistry {
+public @interface BlockRegistry {
 
     /**
-     * The mod id to register the items for.
+     * The mod id to register the blocks for.
      *
      * @return The modid namespace
      */
