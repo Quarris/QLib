@@ -2,6 +2,7 @@ package quarris.qlib.common.reg.loader;
 
 import net.minecraft.item.Item;
 import quarris.qlib.common.reg.ContentLoader;
+import quarris.qlib.common.reg.registry.ItemRegistry;
 
 import java.util.ArrayList;
 import java.util.List;

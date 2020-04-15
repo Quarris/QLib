@@ -25,7 +25,7 @@ public class ContentEventRegistry {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> register) {
         blockLoader.load();
-        QLib.LOGGER.info("Registering " + blockLoader.BLOCKS.size() + " blocks");
+        QLib.LOGGER.info("Registering {} blocks", blockLoader.BLOCKS.size());
         for (Block block : blockLoader.BLOCKS) {
             register.getRegistry().register(block);
         }
