@@ -6,6 +6,7 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import quarris.qlib.mod.data.model.ModelDataHandler;
 import quarris.qlib.mod.proxy.ClientProxy;
 import quarris.qlib.mod.proxy.IProxy;
 import quarris.qlib.mod.proxy.ServerProxy;
@@ -26,6 +27,7 @@ public class QLib {
         LOGGER.info("Gathering Data for {}", MODID);
 
         LOGGER.info("Registering models");
+        ModelDataHandler.registerModels(event);
 
     }
 }

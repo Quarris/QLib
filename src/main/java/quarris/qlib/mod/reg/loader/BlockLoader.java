@@ -7,6 +7,7 @@ import quarris.qlib.api.reg.ContentLoader;
 import quarris.qlib.api.reg.registry.BlockRegistry;
 import quarris.qlib.api.block.IHasCustomBlockItem;
 import quarris.qlib.api.block.IHasNoBlockItem;
+import quarris.qlib.mod.data.model.ModelDataHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class BlockLoader extends ContentLoader<Block, BlockRegistry> {
             block.setRegistryName(modId, name);
         }
         BLOCKS.add(block);
+        ModelDataHandler.BLOCKS.put(modId, block);
 
         if (!(block instanceof IHasNoBlockItem)) {
             BlockItem item;
@@ -39,6 +41,7 @@ public class BlockLoader extends ContentLoader<Block, BlockRegistry> {
             }
 
             BLOCK_ITEMS.add(item);
+            ModelDataHandler.ITEMS.put(modId, item);
         }
     }
 

@@ -7,6 +7,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import quarris.qlib.mod.data.model.ModelDataHandler;
 import quarris.qlib.mod.reg.loader.BlockLoader;
 import quarris.qlib.mod.QLib;
 import quarris.qlib.mod.reg.loader.ContainerLoader;

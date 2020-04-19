@@ -3,6 +3,7 @@ package quarris.qlib.mod.reg.loader;
 import net.minecraft.item.Item;
 import quarris.qlib.api.reg.ContentLoader;
 import quarris.qlib.api.reg.registry.ItemRegistry;
+import quarris.qlib.mod.data.model.ModelDataHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class ItemLoader extends ContentLoader<Item, ItemRegistry> {
             item.setRegistryName(modId, name);
         }
         ITEMS.add(item);
+        ModelDataHandler.ITEMS.put(modId, item);
     }
 
     @Override
