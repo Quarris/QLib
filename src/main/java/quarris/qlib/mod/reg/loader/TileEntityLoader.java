@@ -1,8 +1,8 @@
-package quarris.qlib.common.reg.loader;
+package quarris.qlib.mod.reg.loader;
 
 import net.minecraft.tileentity.TileEntityType;
-import quarris.qlib.common.reg.ContentLoader;
-import quarris.qlib.common.reg.registry.TileRegistry;
+import quarris.qlib.api.reg.ContentLoader;
+import quarris.qlib.api.reg.registry.TileRegistry;
 
 import java.util.ArrayList;
 import java.util.List;

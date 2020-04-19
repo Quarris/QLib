@@ -1,12 +1,12 @@
-package quarris.qlib.common.reg.loader;
+package quarris.qlib.mod.reg.loader;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import quarris.qlib.common.reg.ContentLoader;
-import quarris.qlib.common.reg.registry.BlockRegistry;
-import quarris.qlib.common.block.IHasCustomBlockItem;
-import quarris.qlib.common.block.IHasNoBlockItem;
+import quarris.qlib.api.reg.ContentLoader;
+import quarris.qlib.api.reg.registry.BlockRegistry;
+import quarris.qlib.api.block.IHasCustomBlockItem;
+import quarris.qlib.api.block.IHasNoBlockItem;
 
 import java.util.ArrayList;
 import java.util.List;

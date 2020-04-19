@@ -1,4 +1,4 @@
-package quarris.qlib.common.inventory;
+package quarris.qlib.api.inventory;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;

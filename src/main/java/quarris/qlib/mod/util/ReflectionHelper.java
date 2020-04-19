@@ -1,4 +1,4 @@
-package quarris.qlib.util;
+package quarris.qlib.mod.util;
 
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.forgespi.language.ModFileScanData;

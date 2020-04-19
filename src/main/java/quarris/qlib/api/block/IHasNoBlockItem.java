@@ -1,3 +1,3 @@
-package quarris.qlib.common.block;
+package quarris.qlib.api.block;
 
 public interface IHasNoBlockItem { }

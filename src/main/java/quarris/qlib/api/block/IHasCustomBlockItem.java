@@ -1,4 +1,4 @@
-package quarris.qlib.common.block;
+package quarris.qlib.api.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;

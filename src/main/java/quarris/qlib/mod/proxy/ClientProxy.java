@@ -1,4 +1,4 @@
-package quarris.qlib.proxy;
+package quarris.qlib.mod.proxy;
 
 public class ClientProxy implements IProxy {
 }

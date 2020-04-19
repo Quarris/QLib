@@ -1,4 +1,4 @@
-package quarris.qlib.util;
+package quarris.qlib.mod.util;
 
 import net.minecraft.util.Direction;
 

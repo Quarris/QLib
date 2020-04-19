@@ -1,8 +1,8 @@
-package quarris.qlib.common.reg;
+package quarris.qlib.api.reg;
 
-import quarris.qlib.QLib;
-import quarris.qlib.util.ModHelper;
-import quarris.qlib.util.ReflectionHelper;
+import quarris.qlib.api.QLibApi;
+import quarris.qlib.mod.util.ModHelper;
+import quarris.qlib.mod.util.ReflectionHelper;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -19,13 +19,13 @@ public abstract class ContentLoader<Content, Registry extends Annotation> {
         try {
             registryClasses = ReflectionHelper.getClassesAnnotatedBy(this.getRegistryClass());
         } catch (ClassNotFoundException e) {
-            QLib.LOGGER.error("Error during registering content", e.getCause());
+            QLibApi.LOGGER.error("Error during registering content", e.getCause());
         }
 
         if (registryClasses.isEmpty())
             return;
 
-        QLib.LOGGER.info("Loading content from {} classes for type {}", registryClasses.size(), this.getContentClass().getName());
+        QLibApi.LOGGER.info("Loading content from {} classes for type {}", registryClasses.size(), this.getContentClass().getName());
 
         for (Class registryClass : registryClasses) {
             Registry annotation = (Registry) registryClass.getDeclaredAnnotation(this.getRegistryClass());
@@ -33,7 +33,7 @@ public abstract class ContentLoader<Content, Registry extends Annotation> {
             try {
                 modId = (String) this.getRegistryClass().getMethod("value").invoke(annotation);
             } catch (Exception e) {
-                QLib.LOGGER.error("Could not find the value() tag for class " + annotation.annotationType());
+                QLibApi.LOGGER.error("Could not find the value() tag for class " + annotation.annotationType());
                 continue;
             }
             for (Field field : registryClass.getDeclaredFields()) {
@@ -51,7 +51,7 @@ public abstract class ContentLoader<Content, Registry extends Annotation> {
             }
         }
 
-        ModHelper.switchActiveContainer(QLib.MODID);
+        ModHelper.switchActiveContainer(QLibApi.MODID);
     }
 
     protected abstract void loadContent(String modId, String name, Content item);

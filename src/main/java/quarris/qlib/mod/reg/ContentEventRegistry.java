@@ -1,4 +1,4 @@
-package quarris.qlib.common.reg;
+package quarris.qlib.mod.reg;
 
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
@@ -7,11 +7,11 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import quarris.qlib.QLib;
-import quarris.qlib.common.reg.loader.BlockLoader;
-import quarris.qlib.common.reg.loader.ContainerLoader;
-import quarris.qlib.common.reg.loader.ItemLoader;
-import quarris.qlib.common.reg.loader.TileEntityLoader;
+import quarris.qlib.mod.reg.loader.BlockLoader;
+import quarris.qlib.mod.QLib;
+import quarris.qlib.mod.reg.loader.ContainerLoader;
+import quarris.qlib.mod.reg.loader.ItemLoader;
+import quarris.qlib.mod.reg.loader.TileEntityLoader;
 
 @SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = QLib.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)

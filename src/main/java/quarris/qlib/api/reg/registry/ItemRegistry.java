@@ -1,4 +1,4 @@
-package quarris.qlib.common.reg.registry;
+package quarris.qlib.api.reg.registry;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
