@@ -1,4 +1,4 @@
-package quarris.qlib.api.reg.registry;
+package quarris.qlib.api.registry.registry;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,14 +7,12 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
-public @interface ContainerRegistry {
+public @interface ItemRegistry {
 
     /**
-     * The mod id to register the blocks for.
+     * The mod id to register the items for.
      *
      * @return The modid namespace
      */
     String value();
 }
-
-

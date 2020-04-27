@@ -1,4 +1,4 @@
-package quarris.qlib.mod.reg;
+package quarris.qlib.mod.registry;
 
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
@@ -9,10 +9,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import quarris.qlib.api.QLibApi;
 import quarris.qlib.mod.QLib;
-import quarris.qlib.mod.reg.loader.BlockLoader;
-import quarris.qlib.mod.reg.loader.ContainerLoader;
-import quarris.qlib.mod.reg.loader.ItemLoader;
-import quarris.qlib.mod.reg.loader.TileEntityLoader;
+import quarris.qlib.mod.registry.loader.BlockLoader;
+import quarris.qlib.mod.registry.loader.ContainerLoader;
+import quarris.qlib.mod.registry.loader.ItemLoader;
+import quarris.qlib.mod.registry.loader.TileEntityLoader;
 
 @SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = QLib.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -39,19 +39,14 @@ public class ContentEventRegistry {
         for (Item item : QLibApi.ITEMS) {
             register.getRegistry().register(item);
         }
-
-        QLib.LOGGER.info("Registering {} block items", QLibApi.BLOCK_ITEMS.size());
-        for (Item block : QLibApi.BLOCK_ITEMS) {
-            register.getRegistry().register(block);
-        }
     }
 
     @SubscribeEvent
     public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> register) {
         tileLoader.load();
-        QLib.LOGGER.info("Registering {} tile entity types", tileLoader.TILES.size());
+        QLib.LOGGER.info("Registering {} tile entity types", QLibApi.TILES.size());
 
-        for (TileEntityType tile : tileLoader.TILES) {
+        for (TileEntityType tile : QLibApi.TILES) {
             register.getRegistry().register(tile);
         }
     }
@@ -59,9 +54,9 @@ public class ContentEventRegistry {
     @SubscribeEvent
     public static void registerContainers(RegistryEvent.Register<ContainerType<?>> register) {
         containerLoader.load();
-        QLib.LOGGER.info("Registering {} container entity types", containerLoader.CONTAINERS.size());
+        QLib.LOGGER.info("Registering {} container entity types", QLibApi.CONTAINERS.size());
 
-        for (ContainerType container : containerLoader.CONTAINERS) {
+        for (ContainerType container : QLibApi.CONTAINERS) {
             register.getRegistry().register(container);
         }
     }

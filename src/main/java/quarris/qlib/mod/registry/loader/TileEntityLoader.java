@@ -1,25 +1,24 @@
-package quarris.qlib.mod.reg.loader;
+package quarris.qlib.mod.registry.loader;
 
 import net.minecraft.tileentity.TileEntityType;
-import quarris.qlib.api.reg.ContentLoader;
-import quarris.qlib.api.reg.registry.TileRegistry;
+import quarris.qlib.api.QLibApi;
+import quarris.qlib.api.registry.ContentLoader;
+import quarris.qlib.api.registry.registry.TileRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityLoader extends ContentLoader<TileEntityType, TileRegistry> {
 
-    public final List<TileEntityType> TILES = new ArrayList<>();
-
     @Override
     protected void loadContent(String modId, String name, TileEntityType tile) {
-        if (TILES.contains(tile))
+        if (QLibApi.TILES.contains(tile))
             return;
 
         if (tile.getRegistryName() == null) {
             tile.setRegistryName(modId, name);
         }
-        TILES.add(tile);
+        QLibApi.TILES.add(tile);
     }
 
     @Override

@@ -1,17 +1,13 @@
-package quarris.qlib.mod.reg.loader;
+package quarris.qlib.mod.registry.loader;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import quarris.qlib.api.QLibApi;
 import quarris.qlib.api.data.BlockRegistryHandler;
 import quarris.qlib.api.data.ItemRegistryHandler;
-import quarris.qlib.api.reg.ContentLoader;
-import quarris.qlib.api.reg.registry.BlockRegistry;
+import quarris.qlib.api.registry.ContentLoader;
+import quarris.qlib.api.registry.registry.BlockRegistry;
 import quarris.qlib.mod.data.ModelDataHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlockLoader extends ContentLoader<Block, BlockRegistry> {
 
@@ -36,7 +32,7 @@ public class BlockLoader extends ContentLoader<Block, BlockRegistry> {
                 item.setRegistryName(block.getRegistryName());
             }
 
-            QLibApi.BLOCK_ITEMS.add(item);
+            QLibApi.ITEMS.add(item);
 
             ItemRegistryHandler blockItemHandler = ItemRegistryHandler.HANDLERS.get(item);
 

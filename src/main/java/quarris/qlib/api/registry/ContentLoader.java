@@ -1,4 +1,4 @@
-package quarris.qlib.api.reg;
+package quarris.qlib.api.registry;
 
 import quarris.qlib.api.QLibApi;
 import quarris.qlib.api.util.ModHelper;

@@ -3,8 +3,9 @@ package quarris.qlib.api;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
-import net.minecraft.item.BlockItem;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntityType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import quarris.qlib.api.data.BlockRegistryHandler;
@@ -20,17 +21,19 @@ public class QLibApi {
     public static final String MODID = "qlib";
 
     /**
-     * The following are registered content by QLib Registry System
-     */
-    public static List<Block> BLOCKS = new ArrayList<>();
-    public static List<BlockItem> BLOCK_ITEMS = new ArrayList<>();
-    public static List<Item> ITEMS = new ArrayList<>();
-
-    /**
      * Internal hooks to be used by the base QLib.
      * You shouldn't change or use it.
      */
     public static IInternals internals;
+
+    /**
+     * The following are content registered by QLib Registry System
+     */
+    public static List<Block> BLOCKS = new ArrayList<>();
+    public static List<Item> ITEMS = new ArrayList<>();
+    public static List<ContainerType> CONTAINERS = new ArrayList<>();
+    public static final List<TileEntityType> TILES = new ArrayList<>();
+
 
     public static BlockRegistryHandler getBlockRegistryHandler(Block block) {
         return BlockRegistryHandler.get(block);
