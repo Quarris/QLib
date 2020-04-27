@@ -1,25 +1,29 @@
 package quarris.qlib.mod.reg.loader;
 
 import net.minecraft.item.Item;
+import quarris.qlib.api.QLibApi;
+import quarris.qlib.api.data.ItemRegistryHandler;
 import quarris.qlib.api.reg.ContentLoader;
 import quarris.qlib.api.reg.registry.ItemRegistry;
-import quarris.qlib.mod.data.model.ModelDataHandler;
+import quarris.qlib.mod.data.ModelDataHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemLoader extends ContentLoader<Item, ItemRegistry> {
 
-    public final List<Item> ITEMS = new ArrayList<>();
-
     @Override
     protected void loadContent(String modId, String name, Item item) {
-        if (ITEMS.contains(item)) return;
+        if (QLibApi.ITEMS.contains(item)) return;
         if (item.getRegistryName() == null) {
             item.setRegistryName(modId, name);
         }
-        ITEMS.add(item);
-        ModelDataHandler.ITEMS.put(modId, item);
+        QLibApi.ITEMS.add(item);
+
+        ItemRegistryHandler handler = ItemRegistryHandler.HANDLERS.get(item);
+        if (handler == null) return;
+
+        ModelDataHandler.ITEMS.put(modId, handler);
     }
 
     @Override

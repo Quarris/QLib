@@ -7,9 +7,9 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import quarris.qlib.mod.data.model.ModelDataHandler;
-import quarris.qlib.mod.reg.loader.BlockLoader;
+import quarris.qlib.api.QLibApi;
 import quarris.qlib.mod.QLib;
+import quarris.qlib.mod.reg.loader.BlockLoader;
 import quarris.qlib.mod.reg.loader.ContainerLoader;
 import quarris.qlib.mod.reg.loader.ItemLoader;
 import quarris.qlib.mod.reg.loader.TileEntityLoader;
@@ -26,8 +26,8 @@ public class ContentEventRegistry {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> register) {
         blockLoader.load();
-        QLib.LOGGER.info("Registering {} blocks", blockLoader.BLOCKS.size());
-        for (Block block : blockLoader.BLOCKS) {
+        QLib.LOGGER.info("Registering {} blocks", QLibApi.BLOCKS.size());
+        for (Block block : QLibApi.BLOCKS) {
             register.getRegistry().register(block);
         }
     }
@@ -35,13 +35,13 @@ public class ContentEventRegistry {
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> register) {
         itemLoader.load();
-        QLib.LOGGER.info("Registering {} items", itemLoader.ITEMS.size());
-        for (Item item : itemLoader.ITEMS) {
+        QLib.LOGGER.info("Registering {} items", QLibApi.ITEMS.size());
+        for (Item item : QLibApi.ITEMS) {
             register.getRegistry().register(item);
         }
 
-        QLib.LOGGER.info("Registering {} block items", blockLoader.BLOCK_ITEMS.size());
-        for (Item block : blockLoader.BLOCK_ITEMS) {
+        QLib.LOGGER.info("Registering {} block items", QLibApi.BLOCK_ITEMS.size());
+        for (Item block : QLibApi.BLOCK_ITEMS) {
             register.getRegistry().register(block);
         }
     }

@@ -6,7 +6,9 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import quarris.qlib.mod.data.model.ModelDataHandler;
+import quarris.qlib.api.QLibApi;
+import quarris.qlib.mod.data.LootTableDataHandler;
+import quarris.qlib.mod.data.ModelDataHandler;
 import quarris.qlib.mod.proxy.ClientProxy;
 import quarris.qlib.mod.proxy.IProxy;
 import quarris.qlib.mod.proxy.ServerProxy;
@@ -20,14 +22,22 @@ public class QLib {
     public static IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
     public QLib() {
+        QLibApi.internals = new InternalHooks();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::gatherData);
     }
 
     public void gatherData(GatherDataEvent event) {
         LOGGER.info("Gathering Data for {}", MODID);
 
-        LOGGER.info("Registering models");
-        ModelDataHandler.registerModels(event);
+        if (event.includeClient()) {
+            LOGGER.info("Registering models");
+            ModelDataHandler.registerModels(event);
+        }
+
+        if (event.includeServer()) {
+            LOGGER.info("Registering Loot Tables");
+            LootTableDataHandler.registerLootTables(event);
+        }
 
     }
 }

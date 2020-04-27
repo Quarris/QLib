@@ -1,8 +1,8 @@
 package quarris.qlib.api.reg;
 
 import quarris.qlib.api.QLibApi;
-import quarris.qlib.mod.util.ModHelper;
-import quarris.qlib.mod.util.ReflectionHelper;
+import quarris.qlib.api.util.ModHelper;
+import quarris.qlib.api.util.ReflectionHelper;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

@@ -1,35 +1,37 @@
-package quarris.qlib.mod.data.model;
+package quarris.qlib.api.data.model;
 
 import net.minecraft.block.Block;
+import net.minecraft.state.IProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
-import quarris.qlib.api.data.model.IHasCustomBlockState;
-import quarris.qlib.mod.util.extension.RL;
+import quarris.qlib.api.QLibApi;
+import quarris.qlib.api.data.BlockRegistryHandler;
+import quarris.qlib.api.util.extension.RL;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.function.Function;
 
 public class CustomBlockStateProvider extends BlockStateProvider {
 
-    private final Collection<Block> blocks;
+    private final Collection<BlockRegistryHandler> blocks;
 
-    public CustomBlockStateProvider(GatherDataEvent event, String modid, Collection<Block> blocks) {
+    public CustomBlockStateProvider(GatherDataEvent event, String modid, Collection<BlockRegistryHandler> blocks) {
         super(event.getGenerator(), modid, event.getExistingFileHelper());
         this.blocks = blocks;
     }
 
     @Override
     protected void registerStatesAndModels() {
-        for (Block block : this.blocks) {
-            if (block instanceof IHasCustomBlockState) {
-                ((IHasCustomBlockState) block).makeStateAndModel(this);
-            } else {
-                this.defaultStateAndModel(block);
-            }
+        for (BlockRegistryHandler block : this.blocks) {
+            block.model.accept(this);
         }
     }
 
@@ -43,6 +45,19 @@ public class CustomBlockStateProvider extends BlockStateProvider {
         } else {
             this.simpleBlock(block);
         }
+    }
+
+    public <T extends Comparable<T>> void forProperty(Block block, IProperty<T> property, Function<T, ConfiguredModel[]> mapper) {
+        VariantBlockStateBuilder builder = this.getVariantBuilder(block);
+
+        for (T value : property.getAllowedValues()) {
+            builder.addModels(this.withState(block, property, value), mapper.apply(value));
+        }
+    }
+
+    public <T extends Comparable<T>> VariantBlockStateBuilder.PartialBlockstate withState(Block block, IProperty<T> property, T value) {
+        return this.getVariantBuilder(block)
+                .partialState().with(property, value);
     }
 
     // Why does forge not add this on when its been added for the others?????
@@ -76,5 +91,11 @@ public class CustomBlockStateProvider extends BlockStateProvider {
 
     public String blockName(Block block) {
         return block.getRegistryName().getPath();
+    }
+
+    @Nonnull
+    @Override
+    public String getName() {
+        return QLibApi.MODID+":BlockModel";
     }
 }

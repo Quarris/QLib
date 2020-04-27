@@ -3,46 +3,50 @@ package quarris.qlib.mod.reg.loader;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import quarris.qlib.api.QLibApi;
+import quarris.qlib.api.data.BlockRegistryHandler;
+import quarris.qlib.api.data.ItemRegistryHandler;
 import quarris.qlib.api.reg.ContentLoader;
 import quarris.qlib.api.reg.registry.BlockRegistry;
-import quarris.qlib.api.block.IHasCustomBlockItem;
-import quarris.qlib.api.block.IHasNoBlockItem;
-import quarris.qlib.mod.data.model.ModelDataHandler;
+import quarris.qlib.mod.data.ModelDataHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BlockLoader extends ContentLoader<Block, BlockRegistry> {
 
-    public final List<Block> BLOCKS = new ArrayList<>();
-    public final List<Item> BLOCK_ITEMS = new ArrayList<>();
-
     @Override
     protected void loadContent(String modId, String name, Block block) {
-        if (BLOCKS.contains(block))
+        if (QLibApi.BLOCKS.contains(block))
             return;
 
         if (block.getRegistryName() == null) {
             block.setRegistryName(modId, name);
         }
-        BLOCKS.add(block);
-        ModelDataHandler.BLOCKS.put(modId, block);
+        QLibApi.BLOCKS.add(block);
 
-        if (!(block instanceof IHasNoBlockItem)) {
-            BlockItem item;
-            if (block instanceof IHasCustomBlockItem) {
-                item = ((IHasCustomBlockItem) block).createItem();
-            } else {
-                item = new BlockItem(block, new Item.Properties());
-            }
+        BlockRegistryHandler handler = BlockRegistryHandler.HANDLERS.get(block);
 
+        if (handler == null)
+            return;
+
+        BlockItem item = handler.blockItem.apply(block);
+        if (item != null) {
             if (item.getRegistryName() == null) {
                 item.setRegistryName(block.getRegistryName());
             }
 
-            BLOCK_ITEMS.add(item);
-            ModelDataHandler.ITEMS.put(modId, item);
+            QLibApi.BLOCK_ITEMS.add(item);
+
+            ItemRegistryHandler blockItemHandler = ItemRegistryHandler.HANDLERS.get(item);
+
+            if (blockItemHandler != null) {
+                ModelDataHandler.ITEMS.put(modId, blockItemHandler);
+            }
         }
+
+        ModelDataHandler.BLOCKS.put(modId, handler);
+        // TODO Add ItemRegistryHandler for the BlockItem
     }
 
     @Override

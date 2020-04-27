@@ -1,4 +1,4 @@
-package quarris.qlib.mod.util;
+package quarris.qlib.api.util;
 
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;

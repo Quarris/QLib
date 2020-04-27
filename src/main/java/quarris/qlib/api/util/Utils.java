@@ -1,5 +1,6 @@
-package quarris.qlib.mod.util;
+package quarris.qlib.api.util;
 
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.Direction;
 
 public class Utils {
@@ -12,6 +13,8 @@ public class Utils {
         return Direction.byIndex(val);
     }
 
-
-
+    @SuppressWarnings("all") // IntegerPropery has to contain *A* value
+    public static int maxFromIntProp(IntegerProperty prop) {
+        return prop.getAllowedValues().stream().max(Integer::compareTo).get();
+    }
 }
