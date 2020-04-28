@@ -22,8 +22,9 @@ public class QLib {
     public static IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
     public QLib() {
-        QLibApi.internals = new InternalHooks();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::gatherData);
+        QLibApi.internals = new InternalHooks();
+        QLibApi.SERIALIZER.registerDefaultConverters();
     }
 
     public void gatherData(GatherDataEvent event) {
@@ -38,6 +39,5 @@ public class QLib {
             LOGGER.info("Registering Loot Tables");
             LootTableDataHandler.registerLootTables(event);
         }
-
     }
 }

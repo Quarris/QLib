@@ -10,6 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import quarris.qlib.api.data.BlockRegistryHandler;
 import quarris.qlib.api.data.ItemRegistryHandler;
+import quarris.qlib.api.data.nbt.NBTConverter;
+import quarris.qlib.api.data.nbt.NBTSerializer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,8 @@ public class QLibApi {
      * You shouldn't change or use it.
      */
     public static IInternals internals;
+
+    public static final NBTSerializer SERIALIZER = new NBTSerializer();
 
     /**
      * The following are content registered by QLib Registry System
@@ -45,6 +49,10 @@ public class QLibApi {
 
     public static void addLootTableProvider(Function<DataGenerator, LootTableProvider> provider) {
         internals.addLootTableProvider(provider);
+    }
+
+    public static void addNBTConverter(NBTConverter converter) {
+        SERIALIZER.addConverter(converter);
     }
 
     public interface IInternals {
