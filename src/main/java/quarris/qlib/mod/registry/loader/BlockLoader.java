@@ -21,12 +21,9 @@ public class BlockLoader extends ContentLoader<Block, BlockRegistry> {
         }
         QLibApi.BLOCKS.add(block);
 
-        BlockRegistryHandler handler = BlockRegistryHandler.HANDLERS.get(block);
+        BlockRegistryHandler.HANDLERS.putIfAbsent(block, BlockRegistryHandler.get(block));
 
-        if (handler == null)
-            return;
-
-        BlockItem item = handler.blockItem.apply(block);
+        BlockItem item = BlockRegistryHandler.HANDLERS.get(block).blockItem;
         if (item != null) {
             if (item.getRegistryName() == null) {
                 item.setRegistryName(block.getRegistryName());
@@ -34,15 +31,8 @@ public class BlockLoader extends ContentLoader<Block, BlockRegistry> {
 
             QLibApi.ITEMS.add(item);
 
-            ItemRegistryHandler blockItemHandler = ItemRegistryHandler.HANDLERS.get(item);
-
-            if (blockItemHandler != null) {
-                ModelDataHandler.ITEMS.put(modId, blockItemHandler);
-            }
+            ItemRegistryHandler.HANDLERS.putIfAbsent(item, ItemRegistryHandler.get(item));
         }
-
-        ModelDataHandler.BLOCKS.put(modId, handler);
-        // TODO Add ItemRegistryHandler for the BlockItem
     }
 
     @Override

@@ -17,10 +17,7 @@ public class ItemLoader extends ContentLoader<Item, ItemRegistry> {
         }
         QLibApi.ITEMS.add(item);
 
-        ItemRegistryHandler handler = ItemRegistryHandler.HANDLERS.get(item);
-        if (handler == null) return;
-
-        ModelDataHandler.ITEMS.put(modId, handler);
+        ItemRegistryHandler.HANDLERS.putIfAbsent(item, ItemRegistryHandler.get(item));
     }
 
     @Override

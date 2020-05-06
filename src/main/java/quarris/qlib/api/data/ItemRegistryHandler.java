@@ -15,7 +15,7 @@ public class ItemRegistryHandler {
     public final Item item;
     public Consumer<CustomItemModelProvider> model;
 
-    ItemRegistryHandler(Item item) {
+    private ItemRegistryHandler(Item item) {
         this.item = item;
 
         if (this.item instanceof BlockItem) {
@@ -37,5 +37,9 @@ public class ItemRegistryHandler {
     public ItemRegistryHandler customModel(Consumer<CustomItemModelProvider> customModel) {
         this.model = customModel;
         return this;
+    }
+
+    public void register() {
+        HANDLERS.put(this.item, this);
     }
 }

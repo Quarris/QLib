@@ -1,8 +1,11 @@
 package quarris.qlib.api.data;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTable;
 import quarris.qlib.api.data.loottable.CustomBlockLootTableProvider;
 import quarris.qlib.api.data.model.CustomBlockStateProvider;
@@ -17,13 +20,13 @@ public class BlockRegistryHandler {
     public static final Map<Block, BlockRegistryHandler> HANDLERS = new HashMap<>();
 
     public final Block block;
+    public BlockItem blockItem;
     public Consumer<CustomBlockStateProvider> model;
     public Function<CustomBlockLootTableProvider, LootTable.Builder> lootTable;
-    public Function<Block, BlockItem> blockItem;
 
-    BlockRegistryHandler(Block block) {
+    private BlockRegistryHandler(Block block) {
         this.block = block;
-        this.blockItem = b -> new BlockItem(b, new Item.Properties());
+        this.blockItem = new BlockItem(block, new Item.Properties());
         this.lootTable = provider -> provider.defaultLootTable(block);
         this.model = provider -> provider.defaultStateAndModel(block);
     }
@@ -33,11 +36,11 @@ public class BlockRegistryHandler {
     }
 
     public BlockRegistryHandler noBlockItem() {
-        this.blockItem = block -> null;
+        this.blockItem = null;
         return this;
     }
 
-    public BlockRegistryHandler customBlockItem(Function<Block, BlockItem> customBlockItem) {
+    public BlockRegistryHandler customBlockItem(BlockItem customBlockItem) {
         this.blockItem = customBlockItem;
         return this;
     }

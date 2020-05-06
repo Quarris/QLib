@@ -7,6 +7,7 @@ import quarris.qlib.api.data.BlockRegistryHandler;
 import quarris.qlib.api.data.ItemRegistryHandler;
 import quarris.qlib.api.data.model.CustomBlockStateProvider;
 import quarris.qlib.api.data.model.CustomItemModelProvider;
+import quarris.qlib.api.registry.registry.BlockRegistry;
 
 import java.util.Collection;
 import java.util.Map;
@@ -15,15 +16,26 @@ public class ModelDataHandler {
 
     public static final ListMultimap<String, ItemRegistryHandler> ITEMS = ArrayListMultimap.create();
     public static final ListMultimap<String, BlockRegistryHandler> BLOCKS = ArrayListMultimap.create();
-
-
-    public static void registerModels(GatherDataEvent event) {
-        for (Map.Entry<String, Collection<BlockRegistryHandler>> entry : BLOCKS.asMap().entrySet()) {
-            event.getGenerator().addProvider(new CustomBlockStateProvider(event, entry.getKey(), entry.getValue()));
+    
+    private static void init() {
+        for (BlockRegistryHandler handler : BlockRegistryHandler.HANDLERS.values()) {
+            BLOCKS.put(handler.block.getRegistryName().getNamespace(), handler);
         }
 
-        for (Map.Entry<String, Collection<ItemRegistryHandler>> entry : ITEMS.asMap().entrySet()) {
-            event.getGenerator().addProvider(new CustomItemModelProvider(event, entry.getKey(), entry.getValue()));
+        for (ItemRegistryHandler handler : ItemRegistryHandler.HANDLERS.values()) {
+            ITEMS.put(handler.item.getRegistryName().getNamespace(), handler);
+        }
+    }
+
+    public static void registerModels(GatherDataEvent event) {
+        init();
+        
+        for (String modid : BLOCKS.keySet()) {
+            event.getGenerator().addProvider(new CustomBlockStateProvider(event, modid, BLOCKS.get(modid)));
+        }
+
+        for (String modid : ITEMS.keySet()) {
+            event.getGenerator().addProvider(new CustomItemModelProvider(event, modid, ITEMS.get(modid)));
         }
     }
 }
