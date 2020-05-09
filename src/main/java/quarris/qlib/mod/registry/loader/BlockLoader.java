@@ -22,8 +22,9 @@ public class BlockLoader extends ContentLoader<Block, BlockRegistry> {
         QLibApi.BLOCKS.add(block);
 
         BlockRegistryHandler.HANDLERS.putIfAbsent(block, BlockRegistryHandler.get(block));
+        BlockRegistryHandler handler = BlockRegistryHandler.HANDLERS.get(block);
 
-        BlockItem item = BlockRegistryHandler.HANDLERS.get(block).blockItem;
+        BlockItem item = handler.blockItem;
         if (item != null) {
             if (item.getRegistryName() == null) {
                 item.setRegistryName(block.getRegistryName());

@@ -15,7 +15,7 @@ import java.util.Locale;
 public abstract class ContentLoader<Content, Registry extends Annotation> {
 
     public void load() {
-        List<Class> registryClasses = new ArrayList<>();
+        List<Class<?>> registryClasses = new ArrayList<>();
         try {
             registryClasses = ReflectionHelper.getClassesAnnotatedBy(this.getRegistryClass());
         } catch (ClassNotFoundException e) {
@@ -27,7 +27,7 @@ public abstract class ContentLoader<Content, Registry extends Annotation> {
 
         QLibApi.LOGGER.info("Loading content from {} classes for type {}", registryClasses.size(), this.getContentClass().getName());
 
-        for (Class registryClass : registryClasses) {
+        for (Class<?> registryClass : registryClasses) {
             Registry annotation = (Registry) registryClass.getDeclaredAnnotation(this.getRegistryClass());
             String modId;
             try {

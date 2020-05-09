@@ -51,16 +51,29 @@ public class CustomBlockStateProvider extends BlockStateProvider {
         VariantBlockStateBuilder builder = this.getVariantBuilder(block);
 
         for (T value : property.getAllowedValues()) {
-            builder.addModels(this.withState(block, property, value), mapper.apply(value));
+            builder.addModels(this.withProp(block, property, value), mapper.apply(value));
         }
     }
 
-    public <T extends Comparable<T>> VariantBlockStateBuilder.PartialBlockstate withState(Block block, IProperty<T> property, T value) {
+    public void crossBlock(Block block) {
+        this.getVariantBuilder(block)
+                .partialState().addModels(ConfiguredModel.builder()
+                .modelFile(this.models()
+                        .cross(this.blockName(block), RL.prefix("block/", block.getRegistryName())))
+                .build()
+        );
+    }
+
+    public void cropBlock(Block block) {
+        this.models().crop(this.blockName(block), RL.prefix("block/", block.getRegistryName()));
+    }
+
+    public <T extends Comparable<T>> VariantBlockStateBuilder.PartialBlockstate withProp(Block block, IProperty<T> property, T value) {
         return this.getVariantBuilder(block)
                 .partialState().with(property, value);
     }
 
-    // Why does forge not add this on when its been added for the others?????
+    // Why does forge not add this one when its been added for the others?????
     public void horizontalBlock(Block block) {
         ResourceLocation baseName = blockTexture(block);
         horizontalBlock(block, RL.suffix(baseName, "_side"), RL.suffix(baseName, "_front"), RL.suffix(baseName, "_top"));
@@ -96,6 +109,6 @@ public class CustomBlockStateProvider extends BlockStateProvider {
     @Nonnull
     @Override
     public String getName() {
-        return QLibApi.MODID+":BlockModel";
+        return QLibApi.MODID + ":BlockModel";
     }
 }

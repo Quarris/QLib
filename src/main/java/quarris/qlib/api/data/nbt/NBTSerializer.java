@@ -35,14 +35,20 @@ public class NBTSerializer {
     }
 
     public INBT serialize(Object value) {
+        return this.serialize(value, null);
+    }
+
+    public INBT serialize(Object value, Class clazz) {
         if (value == null)
             return StringNBT.valueOf("null");
 
-        NBTConverter converter;
-        if (value instanceof INBTSerializable) {
-            converter = this.getConverter(INBTSerializable.class);
-        } else {
-            converter = this.getConverter(value.getClass());
+        NBTConverter converter = this.getConverter(clazz);
+        if (converter == null) {
+            if (value instanceof INBTSerializable) {
+                converter = this.getConverter(INBTSerializable.class);
+            } else {
+                converter = this.getConverter(value.getClass());
+            }
         }
 
         if (converter == null) {

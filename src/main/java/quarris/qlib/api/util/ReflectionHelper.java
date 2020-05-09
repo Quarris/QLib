@@ -11,8 +11,8 @@ public class ReflectionHelper {
 
 
 
-    public static List<Class> getClassesAnnotatedBy(Class annotation) throws ClassNotFoundException {
-        List<Class> classes = new ArrayList<>();
+    public static List<Class<?>> getClassesAnnotatedBy(Class<?> annotation) throws ClassNotFoundException {
+        List<Class<?>> classes = new ArrayList<>();
 
         for (ModFileScanData modFile : ModList.get().getAllScanData()) {
             for (ModFileScanData.AnnotationData data : modFile.getAnnotations()) {

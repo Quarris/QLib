@@ -21,11 +21,11 @@ public class BasicTileEntity extends TileEntity {
     }
 
     public void readFromNBT(CompoundNBT nbt) {
-        QLibApi.SERIALIZER.deserialize(this.getClass(), this, nbt);
+        QLibApi.SERIALIZER.deserialize(this.getClass(), this, nbt.get("QLibTileData"));
     }
 
     public void writeToNBT(CompoundNBT nbt) {
-        nbt.put("TileEntity", QLibApi.SERIALIZER.serialize(this));
+        nbt.put("QLibTileData", QLibApi.SERIALIZER.serialize(this, Object.class));
     }
 
     @Override
@@ -65,7 +65,6 @@ public class BasicTileEntity extends TileEntity {
         this.readFromNBT(packet.getNbtCompound());
     }
 
-    @OnlyIn(Dist.DEDICATED_SERVER)
     public void sendToClients() {
         ServerWorld world = (ServerWorld) this.getWorld();
         Stream<ServerPlayerEntity> entities = world.getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(this.getPos()), false);
