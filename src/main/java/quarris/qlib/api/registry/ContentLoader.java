@@ -2,7 +2,6 @@ package quarris.qlib.api.registry;
 
 import quarris.qlib.api.QLibApi;
 import quarris.qlib.api.util.ModHelper;
-import quarris.qlib.api.util.ReflectionHelper;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -17,7 +16,7 @@ public abstract class ContentLoader<Content, Registry extends Annotation> {
     public void load() {
         List<Class<?>> registryClasses = new ArrayList<>();
         try {
-            registryClasses = ReflectionHelper.getClassesAnnotatedBy(this.getRegistryClass());
+            registryClasses = ModHelper.getClassesAnnotatedBy(this.getRegistryClass());
         } catch (ClassNotFoundException e) {
             QLibApi.LOGGER.error("Error during registering content", e.getCause());
         }

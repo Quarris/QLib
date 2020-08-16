@@ -7,6 +7,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.ItemStackHandler;
+import quarris.qlib.api.util.ContainerHelper;
 
 import javax.annotation.Nullable;
 
@@ -32,17 +33,7 @@ public class TileContainer extends Container {
     }
 
     public void addPlayerSlots(int x, int y) {
-        // Inventory
-        for(int j = 0; j < 3; j++) {
-            for(int i = 0; i < 9; i++) {
-                this.addSlot(new Slot(this.playerInv, i + j * 9 + 9, x + i * 18, y + j * 18));
-            }
-        }
-
-        // Hotbar
-        for(int k = 0; k < 9; k++) {
-            this.addSlot(new Slot(this.playerInv, k, x + k * 18, y + 58));
-        }
+        ContainerHelper.addPlayerSlots(this::addSlot, this.playerInv, x, y);
     }
 
 }

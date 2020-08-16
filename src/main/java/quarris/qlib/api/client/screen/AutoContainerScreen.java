@@ -2,6 +2,7 @@ package quarris.qlib.api.client.screen;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.text.ITextComponent;
 import quarris.qlib.api.client.render.NinePatch;
@@ -9,12 +10,12 @@ import quarris.qlib.api.client.render.NinePatches;
 import quarris.qlib.api.container.TileContainer;
 import quarris.qlib.api.util.math.Rectangle;
 
-public class TileContainerScreen<T extends TileContainer> extends ContainerScreen<T> {
+public class AutoContainerScreen<T extends Container> extends ContainerScreen<T> {
 
     public NinePatch containerPatch;
     public NinePatch slotPatch;
 
-    public TileContainerScreen(T container, PlayerInventory inv, ITextComponent titleIn) {
+    public AutoContainerScreen(T container, PlayerInventory inv, ITextComponent titleIn) {
         super(container, inv, titleIn);
         this.setContainerPatch(NinePatches.MC_CONTAINER);
         this.setSlotPatch(NinePatches.MC_SLOT);

@@ -13,7 +13,7 @@ import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import quarris.qlib.api.QLibApi;
 import quarris.qlib.api.data.BlockRegistryHandler;
-import quarris.qlib.api.util.extension.RL;
+import quarris.qlib.api.util.extension.ResLoc;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -59,13 +59,13 @@ public class CustomBlockStateProvider extends BlockStateProvider {
         this.getVariantBuilder(block)
                 .partialState().addModels(ConfiguredModel.builder()
                 .modelFile(this.models()
-                        .cross(this.blockName(block), RL.prefix("block/", block.getRegistryName())))
+                        .cross(this.blockName(block), ResLoc.prefix("block/", block.getRegistryName())))
                 .build()
         );
     }
 
     public void cropBlock(Block block) {
-        this.models().crop(this.blockName(block), RL.prefix("block/", block.getRegistryName()));
+        this.models().crop(this.blockName(block), ResLoc.prefix("block/", block.getRegistryName()));
     }
 
     public <T extends Comparable<T>> VariantBlockStateBuilder.PartialBlockstate withProp(Block block, IProperty<T> property, T value) {
@@ -76,7 +76,7 @@ public class CustomBlockStateProvider extends BlockStateProvider {
     // Why does forge not add this one when its been added for the others?????
     public void horizontalBlock(Block block) {
         ResourceLocation baseName = blockTexture(block);
-        horizontalBlock(block, RL.suffix(baseName, "_side"), RL.suffix(baseName, "_front"), RL.suffix(baseName, "_top"));
+        horizontalBlock(block, ResLoc.suffix(baseName, "_side"), ResLoc.suffix(baseName, "_front"), ResLoc.suffix(baseName, "_top"));
     }
 
     // The original axisBlock methods requires RotatedPillarBlock for no reason at all...
@@ -85,7 +85,7 @@ public class CustomBlockStateProvider extends BlockStateProvider {
     }
 
     public void axisBlock(Block block, ResourceLocation baseName) {
-        axisBlock(block, RL.suffix(baseName, "_side"), RL.suffix(baseName, "_end"));
+        axisBlock(block, ResLoc.suffix(baseName, "_side"), ResLoc.suffix(baseName, "_end"));
     }
 
     public void axisBlock(Block block, ResourceLocation side, ResourceLocation end) {

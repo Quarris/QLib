@@ -3,7 +3,7 @@ package quarris.qlib.api.util.extension;
 import net.minecraft.util.ResourceLocation;
 
 // Resource Location extension methods
-public class RL {
+public class ResLoc {
 
     public static ResourceLocation suffix(ResourceLocation location, String suffix) {
         return new ResourceLocation(location.getNamespace(), location.getPath() + suffix);
