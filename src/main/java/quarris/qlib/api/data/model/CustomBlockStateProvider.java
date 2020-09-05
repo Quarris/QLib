@@ -12,7 +12,7 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import quarris.qlib.api.QLibApi;
-import quarris.qlib.api.data.BlockRegistryHandler;
+import quarris.qlib.api.data.BlockRegistryObject;
 import quarris.qlib.api.util.extension.ResLoc;
 
 import javax.annotation.Nonnull;
@@ -21,16 +21,16 @@ import java.util.function.Function;
 
 public class CustomBlockStateProvider extends BlockStateProvider {
 
-    private final Collection<BlockRegistryHandler> blocks;
+    private final Collection<BlockRegistryObject> blocks;
 
-    public CustomBlockStateProvider(GatherDataEvent event, String modid, Collection<BlockRegistryHandler> blocks) {
+    public CustomBlockStateProvider(GatherDataEvent event, String modid, Collection<BlockRegistryObject> blocks) {
         super(event.getGenerator(), modid, event.getExistingFileHelper());
         this.blocks = blocks;
     }
 
     @Override
     protected void registerStatesAndModels() {
-        for (BlockRegistryHandler block : this.blocks) {
+        for (BlockRegistryObject block : this.blocks) {
             block.model.accept(this);
         }
     }

@@ -3,26 +3,22 @@ package quarris.qlib.mod.data;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
-import quarris.qlib.api.data.BlockRegistryHandler;
-import quarris.qlib.api.data.ItemRegistryHandler;
+import quarris.qlib.api.data.BlockRegistryObject;
+import quarris.qlib.api.data.ItemRegistryObject;
 import quarris.qlib.api.data.model.CustomBlockStateProvider;
 import quarris.qlib.api.data.model.CustomItemModelProvider;
-import quarris.qlib.api.registry.registry.BlockRegistry;
-
-import java.util.Collection;
-import java.util.Map;
 
 public class ModelDataHandler {
 
-    public static final ListMultimap<String, ItemRegistryHandler> ITEMS = ArrayListMultimap.create();
-    public static final ListMultimap<String, BlockRegistryHandler> BLOCKS = ArrayListMultimap.create();
+    public static final ListMultimap<String, ItemRegistryObject> ITEMS = ArrayListMultimap.create();
+    public static final ListMultimap<String, BlockRegistryObject> BLOCKS = ArrayListMultimap.create();
     
     private static void init() {
-        for (BlockRegistryHandler handler : BlockRegistryHandler.HANDLERS.values()) {
+        for (BlockRegistryObject handler : BlockRegistryObject.HANDLERS.values()) {
             BLOCKS.put(handler.block.getRegistryName().getNamespace(), handler);
         }
 
-        for (ItemRegistryHandler handler : ItemRegistryHandler.HANDLERS.values()) {
+        for (ItemRegistryObject handler : ItemRegistryObject.HANDLERS.values()) {
             ITEMS.put(handler.item.getRegistryName().getNamespace(), handler);
         }
     }

@@ -3,10 +3,7 @@ package quarris.qlib.mod.registry.loader;
 import net.minecraft.inventory.container.ContainerType;
 import quarris.qlib.api.QLibApi;
 import quarris.qlib.api.registry.ContentLoader;
-import quarris.qlib.api.registry.registry.ContainerRegistry;
-
-import java.util.ArrayList;
-import java.util.List;
+import quarris.qlib.api.registry.annotations.ContainerRegistry;
 
 public class ContainerLoader extends ContentLoader<ContainerType, ContainerRegistry> {
 

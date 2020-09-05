@@ -2,6 +2,7 @@ package quarris.qlib.api.client.render;
 
 import net.minecraft.util.ResourceLocation;
 import quarris.qlib.api.QLibApi;
+import quarris.qlib.api.util.math.Padding;
 import quarris.qlib.api.util.math.Point;
 import quarris.qlib.api.util.math.Rectangle;
 

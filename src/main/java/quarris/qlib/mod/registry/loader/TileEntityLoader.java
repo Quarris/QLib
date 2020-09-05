@@ -3,10 +3,7 @@ package quarris.qlib.mod.registry.loader;
 import net.minecraft.tileentity.TileEntityType;
 import quarris.qlib.api.QLibApi;
 import quarris.qlib.api.registry.ContentLoader;
-import quarris.qlib.api.registry.registry.TileRegistry;
-
-import java.util.ArrayList;
-import java.util.List;
+import quarris.qlib.api.registry.annotations.TileRegistry;
 
 public class TileEntityLoader extends ContentLoader<TileEntityType, TileRegistry> {
 

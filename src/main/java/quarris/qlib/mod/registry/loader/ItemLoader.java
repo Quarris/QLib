@@ -2,10 +2,9 @@ package quarris.qlib.mod.registry.loader;
 
 import net.minecraft.item.Item;
 import quarris.qlib.api.QLibApi;
-import quarris.qlib.api.data.ItemRegistryHandler;
+import quarris.qlib.api.data.ItemRegistryObject;
 import quarris.qlib.api.registry.ContentLoader;
-import quarris.qlib.api.registry.registry.ItemRegistry;
-import quarris.qlib.mod.data.ModelDataHandler;
+import quarris.qlib.api.registry.annotations.ItemRegistry;
 
 public class ItemLoader extends ContentLoader<Item, ItemRegistry> {
 
@@ -17,7 +16,7 @@ public class ItemLoader extends ContentLoader<Item, ItemRegistry> {
         }
         QLibApi.ITEMS.add(item);
 
-        ItemRegistryHandler.HANDLERS.putIfAbsent(item, ItemRegistryHandler.get(item));
+        ItemRegistryObject.HANDLERS.putIfAbsent(item, ItemRegistryObject.get(item));
     }
 
     @Override

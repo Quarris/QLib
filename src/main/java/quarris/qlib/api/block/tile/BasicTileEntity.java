@@ -20,32 +20,10 @@ public class BasicTileEntity extends TileEntity {
         super(type);
     }
 
-    public void readFromNBT(CompoundNBT nbt) {
-        QLibApi.SERIALIZER.deserialize(this.getClass(), this, nbt.get("QLibTileData"));
-    }
-
-    public void writeToNBT(CompoundNBT nbt) {
-        nbt.put("QLibTileData", QLibApi.SERIALIZER.serialize(this, Object.class));
-    }
-
-    @Override
-    public void read(CompoundNBT nbt) {
-        super.read(nbt);
-        this.readFromNBT(nbt);
-    }
-
-    @Override
-    public CompoundNBT write(CompoundNBT nbt) {
-        super.write(nbt);
-        this.writeToNBT(nbt);
-        return nbt;
-    }
-
     @Override
     public final SUpdateTileEntityPacket getUpdatePacket() {
         CompoundNBT compound = new CompoundNBT();
-        this.writeToNBT(compound);
-
+        this.write(compound);
         return new SUpdateTileEntityPacket(this.pos, 0, compound);
     }
 
@@ -56,20 +34,21 @@ public class BasicTileEntity extends TileEntity {
 
     @Override
     public void handleUpdateTag(CompoundNBT tag) {
-        this.readFromNBT(tag);
+        this.read(tag);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
         super.onDataPacket(net, packet);
-        this.readFromNBT(packet.getNbtCompound());
+        this.read(packet.getNbtCompound());
     }
 
     public void sendToClients() {
-        ServerWorld world = (ServerWorld) this.getWorld();
-        Stream<ServerPlayerEntity> entities = world.getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(this.getPos()), false);
-        SUpdateTileEntityPacket packet = this.getUpdatePacket();
-        entities.forEach(e -> e.connection.sendPacket(packet));
+        if (!this.getWorld().isRemote) {
+            ServerWorld world = (ServerWorld) this.getWorld();
+            Stream<ServerPlayerEntity> entities = world.getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(this.getPos()), false);
+            SUpdateTileEntityPacket packet = this.getUpdatePacket();
+            entities.forEach(e -> e.connection.sendPacket(packet));
+        }
     }
-
 }

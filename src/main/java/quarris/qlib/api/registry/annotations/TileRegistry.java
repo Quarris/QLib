@@ -1,4 +1,4 @@
-package quarris.qlib.api.registry.registry;
+package quarris.qlib.api.registry.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 public @interface TileRegistry {
 
     /**
-     * The mod id to register the items for.
+     * The mod id to register the tile entities for.
      *
      * @return The modid namespace
      */

@@ -13,8 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-def mcVersion = "1.15.2"
-version = '0.1'
+version = '1.15.2-0.1'
 group = 'quarris.qlib' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'QLib'
 
@@ -86,6 +85,7 @@ dependencies {
 }
 
 jar {
+    archiveName = "${baseName}-${version}.${extension}"
     manifest {
         attributes([
             "Specification-Title": "qlib",
@@ -101,7 +101,7 @@ jar {
 
 task sourcesJar(type: Jar) {
     from(sourceSets.main.allSource)
-    archiveName = "${baseName}-${mcVersion}-${version}-sources.${extension}"
+    archiveName = "${baseName}-${version}-sources.${extension}"
 }
 
 artifacts {

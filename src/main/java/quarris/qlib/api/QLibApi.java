@@ -1,20 +1,26 @@
 package quarris.qlib.api;
 
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import quarris.qlib.api.data.BlockRegistryHandler;
-import quarris.qlib.api.data.ItemRegistryHandler;
+import quarris.qlib.api.data.BlockRegistryObject;
+import quarris.qlib.api.data.ItemRegistryObject;
 import quarris.qlib.api.data.nbt.NBTConverter;
 import quarris.qlib.api.data.nbt.NBTSerializer;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class QLibApi {
@@ -33,18 +39,19 @@ public class QLibApi {
     /**
      * The following are content registered by QLib Registry System
      */
-    public static List<Block> BLOCKS = new ArrayList<>();
-    public static List<Item> ITEMS = new ArrayList<>();
-    public static List<ContainerType> CONTAINERS = new ArrayList<>();
-    public static final List<TileEntityType> TILES = new ArrayList<>();
+    public static final Set<Block> BLOCKS = new HashSet<>();
+    public static final Set<Item> ITEMS = new HashSet<>();
+    public static final Set<ContainerType<?>> CONTAINERS = new HashSet<>();
+    public static final Set<TileEntityType<?>> TILES = new HashSet<>();
+    public static final Set<EntityType<?>> ENTITIES = new HashSet<>();
 
 
-    public static BlockRegistryHandler getBlockRegistryHandler(Block block) {
-        return BlockRegistryHandler.get(block);
+    public static BlockRegistryObject getBlockRegistryHandler(Block block) {
+        return BlockRegistryObject.get(block);
     }
 
-    public static ItemRegistryHandler getItemRegistryHandler(Item item) {
-        return ItemRegistryHandler.get(item);
+    public static ItemRegistryObject getItemRegistryHandler(Item item) {
+        return ItemRegistryObject.get(item);
     }
 
     public static void addLootTableProvider(Function<DataGenerator, LootTableProvider> provider) {

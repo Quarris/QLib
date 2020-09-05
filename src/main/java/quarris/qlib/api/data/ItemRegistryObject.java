@@ -8,14 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class ItemRegistryHandler {
+public class ItemRegistryObject {
 
-    public static final Map<Item, ItemRegistryHandler> HANDLERS = new HashMap<>();
+    public static final Map<Item, ItemRegistryObject> HANDLERS = new HashMap<>();
 
     public final Item item;
     public Consumer<CustomItemModelProvider> model;
 
-    private ItemRegistryHandler(Item item) {
+    private ItemRegistryObject(Item item) {
         this.item = item;
 
         if (this.item instanceof BlockItem) {
@@ -25,16 +25,16 @@ public class ItemRegistryHandler {
         }
     }
 
-    public static ItemRegistryHandler get(Item item) {
-        return new ItemRegistryHandler(item);
+    public static ItemRegistryObject get(Item item) {
+        return new ItemRegistryObject(item);
     }
 
-    public ItemRegistryHandler noModel() {
+    public ItemRegistryObject noModel() {
         this.model = provider -> {};
         return this;
     }
 
-    public ItemRegistryHandler customModel(Consumer<CustomItemModelProvider> customModel) {
+    public ItemRegistryObject customModel(Consumer<CustomItemModelProvider> customModel) {
         this.model = customModel;
         return this;
     }

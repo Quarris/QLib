@@ -3,11 +3,10 @@ package quarris.qlib.mod.registry.loader;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import quarris.qlib.api.QLibApi;
-import quarris.qlib.api.data.BlockRegistryHandler;
-import quarris.qlib.api.data.ItemRegistryHandler;
+import quarris.qlib.api.data.BlockRegistryObject;
+import quarris.qlib.api.data.ItemRegistryObject;
 import quarris.qlib.api.registry.ContentLoader;
-import quarris.qlib.api.registry.registry.BlockRegistry;
-import quarris.qlib.mod.data.ModelDataHandler;
+import quarris.qlib.api.registry.annotations.BlockRegistry;
 
 public class BlockLoader extends ContentLoader<Block, BlockRegistry> {
 
@@ -21,8 +20,8 @@ public class BlockLoader extends ContentLoader<Block, BlockRegistry> {
         }
         QLibApi.BLOCKS.add(block);
 
-        BlockRegistryHandler.HANDLERS.putIfAbsent(block, BlockRegistryHandler.get(block));
-        BlockRegistryHandler handler = BlockRegistryHandler.HANDLERS.get(block);
+        BlockRegistryObject.HANDLERS.putIfAbsent(block, BlockRegistryObject.get(block));
+        BlockRegistryObject handler = BlockRegistryObject.HANDLERS.get(block);
 
         BlockItem item = handler.blockItem;
         if (item != null) {
@@ -32,7 +31,7 @@ public class BlockLoader extends ContentLoader<Block, BlockRegistry> {
 
             QLibApi.ITEMS.add(item);
 
-            ItemRegistryHandler.HANDLERS.putIfAbsent(item, ItemRegistryHandler.get(item));
+            ItemRegistryObject.HANDLERS.putIfAbsent(item, ItemRegistryObject.get(item));
         }
     }
 

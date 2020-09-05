@@ -5,22 +5,22 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import quarris.qlib.api.QLibApi;
-import quarris.qlib.api.data.ItemRegistryHandler;
+import quarris.qlib.api.data.ItemRegistryObject;
 
 import java.util.Collection;
 
 public class CustomItemModelProvider extends ItemModelProvider {
 
-    public final Collection<ItemRegistryHandler> items;
+    public final Collection<ItemRegistryObject> items;
 
-    public CustomItemModelProvider(GatherDataEvent event, String modid, Collection<ItemRegistryHandler> items) {
+    public CustomItemModelProvider(GatherDataEvent event, String modid, Collection<ItemRegistryObject> items) {
         super(event.getGenerator(), modid, event.getExistingFileHelper());
         this.items = items;
     }
 
     @Override
     protected void registerModels() {
-        for (ItemRegistryHandler item : this.items) {
+        for (ItemRegistryObject item : this.items) {
             item.model.accept(this);
         }
     }

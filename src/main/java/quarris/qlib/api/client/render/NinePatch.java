@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import quarris.qlib.api.QLibApi;
+import quarris.qlib.api.util.math.Padding;
 import quarris.qlib.api.util.math.Point;
 import quarris.qlib.api.util.math.Rectangle;
 

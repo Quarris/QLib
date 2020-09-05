@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.storage.loot.LootTable;
 import quarris.qlib.api.QLibApi;
-import quarris.qlib.api.data.BlockRegistryHandler;
+import quarris.qlib.api.data.BlockRegistryObject;
 
 public class CustomBlockLootTableProvider extends BlockLootTableProvider {
 
@@ -15,7 +15,7 @@ public class CustomBlockLootTableProvider extends BlockLootTableProvider {
     @Override
     protected void addTables() {
         for (Block block : QLibApi.BLOCKS) {
-            LootTable.Builder builder = BlockRegistryHandler.HANDLERS.get(block).lootTable.apply(this);
+            LootTable.Builder builder = BlockRegistryObject.HANDLERS.get(block).lootTable.apply(this);
             if (builder != null) {
                 this.lootTables.put(block, builder);
             }
