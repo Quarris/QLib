@@ -1,39 +1,37 @@
 package quarris.qlib.mod.registry.loader;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import quarris.qlib.api.QLibApi;
-import quarris.qlib.api.data.BlockRegistryHandler;
-import quarris.qlib.api.data.ItemRegistryHandler;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import quarris.qlib.api.registry.ContentLoader;
 import quarris.qlib.api.registry.registry.BlockRegistry;
-import quarris.qlib.mod.data.ModelDataHandler;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 
 public class BlockLoader extends ContentLoader<Block, BlockRegistry> {
 
+    public final Map<String, DeferredRegister<Block>> registers = new HashMap<>();
+
     @Override
-    protected void loadContent(String modId, String name, Block block) {
-        if (QLibApi.BLOCKS.contains(block))
-            return;
+    protected void loadContent(String modId, String name, Supplier<Block> blockSupplier) {
+        DeferredRegister<Block> registry = registers.computeIfAbsent(modId, id -> DeferredRegister.create(ForgeRegistries.BLOCKS, id));
+        registry.register(name, blockSupplier);
 
-        if (block.getRegistryName() == null) {
-            block.setRegistryName(modId, name);
-        }
-        QLibApi.BLOCKS.add(block);
-
-        BlockRegistryHandler.HANDLERS.putIfAbsent(block, BlockRegistryHandler.get(block));
-        BlockRegistryHandler handler = BlockRegistryHandler.HANDLERS.get(block);
+        /*BlockRegistryHandler.HANDLERS.putIfAbsent(blockSupplier, BlockRegistryHandler.get(blockSupplier));
+        BlockRegistryHandler handler = BlockRegistryHandler.HANDLERS.get(blockSupplier);
 
         BlockItem item = handler.blockItem;
         if (item != null) {
             if (item.getRegistryName() == null) {
-                item.setRegistryName(block.getRegistryName());
+                item.setRegistryName(blockSupplier.getRegistryName());
             }
 
             QLibApi.ITEMS.add(item);
 
             ItemRegistryHandler.HANDLERS.putIfAbsent(item, ItemRegistryHandler.get(item));
-        }
+        }*/
     }
 
     @Override

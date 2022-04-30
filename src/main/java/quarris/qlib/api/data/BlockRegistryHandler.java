@@ -1,9 +1,9 @@
 package quarris.qlib.api.data;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.LootTable;
 import quarris.qlib.api.data.loottable.CustomBlockLootTableProvider;
 import quarris.qlib.api.data.model.CustomBlockStateProvider;
 
@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class BlockRegistryHandler {
 

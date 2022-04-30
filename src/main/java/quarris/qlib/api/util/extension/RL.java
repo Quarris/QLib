@@ -1,6 +1,6 @@
 package quarris.qlib.api.util.extension;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 // Resource Location extension methods
 public class RL {

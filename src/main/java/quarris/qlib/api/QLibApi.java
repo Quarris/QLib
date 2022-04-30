@@ -1,20 +1,23 @@
 package quarris.qlib.api;
 
-import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.LootTableProvider;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import quarris.qlib.api.data.BlockRegistryHandler;
 import quarris.qlib.api.data.ItemRegistryHandler;
-import quarris.qlib.api.data.nbt.NBTConverter;
+import quarris.qlib.api.data.nbt.TagConverter;
 import quarris.qlib.api.data.nbt.NBTSerializer;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 public class QLibApi {
@@ -30,14 +33,7 @@ public class QLibApi {
 
     public static final NBTSerializer SERIALIZER = new NBTSerializer();
 
-    /**
-     * The following are content registered by QLib Registry System
-     */
-    public static List<Block> BLOCKS = new ArrayList<>();
-    public static List<Item> ITEMS = new ArrayList<>();
-    public static List<ContainerType> CONTAINERS = new ArrayList<>();
-    public static final List<TileEntityType> TILES = new ArrayList<>();
-
+    /* ----------------------------------OLD---------------------------------------- */
 
     public static BlockRegistryHandler getBlockRegistryHandler(Block block) {
         return BlockRegistryHandler.get(block);
@@ -51,7 +47,7 @@ public class QLibApi {
         internals.addLootTableProvider(provider);
     }
 
-    public static void addNBTConverter(NBTConverter converter) {
+    public static void addNBTConverter(TagConverter converter) {
         SERIALIZER.addConverter(converter);
     }
 

@@ -52,35 +52,51 @@ public class Rectangle implements Cloneable {
     }
 
     public Rectangle move(int x, int y) {
-        return new Rectangle(this.x+x, this.y+y, this.width, this.height);
+        return new Rectangle(this.x + x, this.y + y, this.width, this.height);
     }
 
-    public Point getCenter() {
+    public int left() {
+        return this.x;
+    }
+
+    public int right() {
+        return this.x + this.width;
+    }
+
+    public int top() {
+        return this.y;
+    }
+
+    public int bottom() {
+        return this.y + this.height;
+    }
+
+    public Point center() {
         return new Point(this.x + this.width / 2, this.y + this.height / 2);
     }
 
-    public Point getSize() {
+    public Point size() {
         return new Point(this.width, this.height);
     }
 
-    public Point getPosition() {
-        return this.getTopLeft();
+    public Point position() {
+        return this.topLeft();
     }
 
-    public Point getTopLeft() {
+    public Point topLeft() {
         return new Point(this.x, this.y);
     }
 
-    public Point getTopRight() {
-        return this.getTopLeft().add(this.width, 0);
+    public Point topRight() {
+        return this.topLeft().add(this.width, 0);
     }
 
-    public Point getBottomLeft() {
-        return this.getTopLeft().add(0, this.height);
+    public Point bottomLeft() {
+        return this.topLeft().add(0, this.height);
     }
 
-    public Point getBottomRight() {
-        return this.getTopLeft().add(this.getSize());
+    public Point bottomRight() {
+        return this.topLeft().add(this.size());
     }
 
     @Override

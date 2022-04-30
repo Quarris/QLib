@@ -3,13 +3,13 @@ package quarris.qlib.api.data.loottable;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DirectoryCache;
-import net.minecraft.data.IDataProvider;
-import net.minecraft.data.LootTableProvider;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootParameterSet;
-import net.minecraft.world.storage.loot.LootTable;
-import net.minecraft.world.storage.loot.LootTableManager;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.HashCache;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.LootTables;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import quarris.qlib.api.QLibApi;
 
 import java.io.IOException;
@@ -32,22 +32,22 @@ public abstract class AbstractLootTableProvider<T> extends LootTableProvider {
 
     protected abstract void addTables();
     protected abstract ResourceLocation getLootTableLocation(T object);
-    protected abstract LootParameterSet getLootParameterSet();
+    protected abstract LootContextParamSet getLootParameterSet();
 
     @Override
-    public void act(DirectoryCache cache) {
+    public void run(HashCache cache) {
         this.addTables();
 
         Map<ResourceLocation, LootTable> tables = new HashMap<>();
         for (Map.Entry<T, LootTable.Builder> entry : this.lootTables.entrySet()) {
-            tables.put(this.getLootTableLocation(entry.getKey()), entry.getValue().setParameterSet(this.getLootParameterSet()).build());
+            tables.put(this.getLootTableLocation(entry.getKey()), entry.getValue().setParamSet(this.getLootParameterSet()).build());
         }
 
         Path outputFolder = this.generator.getOutputFolder();
         tables.forEach((key, lootTable) -> {
             Path path = outputFolder.resolve("data/" + key.getNamespace() + "/loot_tables/" + key.getPath() + ".json");
             try {
-                IDataProvider.save(GSON, cache, LootTableManager.toJson(lootTable), path);
+                DataProvider.save(GSON, cache, LootTables.serialize(lootTable), path);
             } catch (IOException e) {
                 QLibApi.LOGGER.error("Couldn't write loot table {}", path, e);
             }

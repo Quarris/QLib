@@ -2,15 +2,11 @@ package quarris.qlib.mod.data;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import quarris.qlib.api.data.BlockRegistryHandler;
 import quarris.qlib.api.data.ItemRegistryHandler;
 import quarris.qlib.api.data.model.CustomBlockStateProvider;
 import quarris.qlib.api.data.model.CustomItemModelProvider;
-import quarris.qlib.api.registry.registry.BlockRegistry;
-
-import java.util.Collection;
-import java.util.Map;
 
 public class ModelDataHandler {
 

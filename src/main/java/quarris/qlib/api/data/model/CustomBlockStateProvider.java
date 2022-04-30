@@ -1,16 +1,16 @@
 package quarris.qlib.api.data.model;
 
-import net.minecraft.block.Block;
-import net.minecraft.state.IProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import quarris.qlib.api.QLibApi;
 import quarris.qlib.api.data.BlockRegistryHandler;
 import quarris.qlib.api.util.extension.RL;
@@ -37,7 +37,7 @@ public class CustomBlockStateProvider extends BlockStateProvider {
 
     // TODO: Make this nicer. If possible have a way to default any state property.
     public void defaultStateAndModel(Block block) {
-        StateContainer<?, ?> states = block.getStateContainer();
+        StateDefinition<?, ?> states = block.getStateDefinition();
         if (states.getProperty(BlockStateProperties.AXIS.getName()) != null) {
             this.axisBlock(block);
         } else if (states.getProperty(BlockStateProperties.HORIZONTAL_FACING.getName()) != null) {
@@ -47,10 +47,10 @@ public class CustomBlockStateProvider extends BlockStateProvider {
         }
     }
 
-    public <T extends Comparable<T>> void forProperty(Block block, IProperty<T> property, Function<T, ConfiguredModel[]> mapper) {
+    public <T extends Comparable<T>> void forProperty(Block block, Property<T> property, Function<T, ConfiguredModel[]> mapper) {
         VariantBlockStateBuilder builder = this.getVariantBuilder(block);
 
-        for (T value : property.getAllowedValues()) {
+        for (T value : property.getPossibleValues()) {
             builder.addModels(this.withProp(block, property, value), mapper.apply(value));
         }
     }
@@ -68,7 +68,7 @@ public class CustomBlockStateProvider extends BlockStateProvider {
         this.models().crop(this.blockName(block), RL.prefix("block/", block.getRegistryName()));
     }
 
-    public <T extends Comparable<T>> VariantBlockStateBuilder.PartialBlockstate withProp(Block block, IProperty<T> property, T value) {
+    public <T extends Comparable<T>> VariantBlockStateBuilder.PartialBlockstate withProp(Block block, Property<T> property, T value) {
         return this.getVariantBuilder(block)
                 .partialState().with(property, value);
     }

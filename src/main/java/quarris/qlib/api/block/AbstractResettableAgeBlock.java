@@ -1,18 +1,18 @@
 package quarris.qlib.api.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import quarris.qlib.api.util.Utils;
 
 import java.util.Random;
@@ -26,42 +26,45 @@ public abstract class AbstractResettableAgeBlock extends Block {
     }
 
     public abstract IntegerProperty getAgeProp();
-    public abstract ItemStack getItemDrop(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockRayTraceResult ray);
+    public abstract ItemStack getItemDrop(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult ray);
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(this.getAgeProp());
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        pBuilder.add(this.getAgeProp());
     }
 
+
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
-        if (!world.isRemote) {
-            if (state.get(this.getAgeProp()) == this.maxAge) {
-                this.reset(state, world, pos, player, ray);
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!world.isClientSide()) {
+            if (state.getValue(this.getAgeProp()) == this.maxAge) {
+                this.harvest(state, world, pos, player, hit);
+                return InteractionResult.CONSUME;
             }
         }
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
     }
 
-    public void reset(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockRayTraceResult ray) {
-        if (!world.isRemote) {
-            world.setBlockState(pos, state.with(this.getAgeProp(), 0), 2);
-            ItemStack item = this.getItemDrop(state, world, pos, player, ray);
+    public void harvest(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!world.isClientSide()) {
+            world.setBlock(pos, state.setValue(this.getAgeProp(), 0), 3);
+            ItemStack item = this.getItemDrop(state, world, pos, player, hit);
             ItemEntity drop = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), item);
-            world.addEntity(drop);
+            world.addFreshEntity(drop);
         }
     }
 
+
     @Override
-    public boolean ticksRandomly(BlockState state) {
-        return state.get(this.getAgeProp()) < this.maxAge;
+    public boolean isRandomlyTicking(BlockState state) {
+        return state.getValue(this.getAgeProp()) < this.maxAge;
     }
 
     @Override
-    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        int i = state.get(this.getAgeProp());
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+        int i = state.getValue(this.getAgeProp());
         if (i < this.maxAge) {
-            worldIn.setBlockState(pos, state.with(this.getAgeProp(), i + 1), 2);
+            level.setBlock(pos, state.setValue(this.getAgeProp(), i + 1), 2);
         }
     }
 }

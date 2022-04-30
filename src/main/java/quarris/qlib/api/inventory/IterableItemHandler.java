@@ -1,18 +1,11 @@
 package quarris.qlib.api.inventory;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.Iterator;
 
-public class IterableItemHandler implements Iterable<ItemStack> {
-
-    private IItemHandler itemHandler;
-
-
-    public IterableItemHandler(IItemHandler itemHandler) {
-        this.itemHandler = itemHandler;
-    }
+public record IterableItemHandler(IItemHandler itemHandler) implements Iterable<ItemStack> {
 
     @Override
     public Iterator<ItemStack> iterator() {

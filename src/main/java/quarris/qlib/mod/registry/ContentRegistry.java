@@ -1,29 +1,34 @@
 package quarris.qlib.mod.registry;
 
-import net.minecraft.block.Block;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
 import quarris.qlib.api.QLibApi;
 import quarris.qlib.mod.QLib;
 import quarris.qlib.mod.registry.loader.BlockLoader;
-import quarris.qlib.mod.registry.loader.ContainerLoader;
+import quarris.qlib.mod.registry.loader.MenuLoader;
 import quarris.qlib.mod.registry.loader.ItemLoader;
-import quarris.qlib.mod.registry.loader.TileEntityLoader;
+import quarris.qlib.mod.registry.loader.BlockEntityLoader;
 
 @SuppressWarnings("unused")
-@Mod.EventBusSubscriber(modid = QLib.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ContentEventRegistry {
+public class ContentRegistry {
 
     public static final BlockLoader blockLoader = new BlockLoader();
     public static final ItemLoader itemLoader = new ItemLoader();
-    public static final TileEntityLoader tileLoader = new TileEntityLoader();
-    public static final ContainerLoader containerLoader = new ContainerLoader();
+    public static final BlockEntityLoader tileLoader = new BlockEntityLoader();
+    public static final MenuLoader menuLoader = new MenuLoader();
 
-    @SubscribeEvent
+    public static void addRegister(DeferredRegister<?> registry) {
+        registry.register(FMLJavaModLoadingContext.get().getModEventBus());
+    }
+
+    /*@SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> register) {
         blockLoader.load();
         QLib.LOGGER.info("Registering {} blocks", QLibApi.BLOCKS.size());
@@ -42,22 +47,22 @@ public class ContentEventRegistry {
     }
 
     @SubscribeEvent
-    public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> register) {
+    public static void registerTileEntities(RegistryEvent.Register<BlockEntityType<?>> register) {
         tileLoader.load();
         QLib.LOGGER.info("Registering {} tile entity types", QLibApi.TILES.size());
 
-        for (TileEntityType tile : QLibApi.TILES) {
+        for (BlockEntityType tile : QLibApi.TILES) {
             register.getRegistry().register(tile);
         }
     }
     
     @SubscribeEvent
-    public static void registerContainers(RegistryEvent.Register<ContainerType<?>> register) {
-        containerLoader.load();
+    public static void registerContainers(RegistryEvent.Register<MenuType<?>> register) {
+        menuLoader.load();
         QLib.LOGGER.info("Registering {} container entity types", QLibApi.CONTAINERS.size());
 
-        for (ContainerType container : QLibApi.CONTAINERS) {
+        for (MenuType container : QLibApi.CONTAINERS) {
             register.getRegistry().register(container);
         }
-    }
+    }*/
 }

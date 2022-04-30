@@ -1,23 +1,28 @@
 package quarris.qlib.mod.registry.loader;
 
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import quarris.qlib.api.QLibApi;
 import quarris.qlib.api.data.ItemRegistryHandler;
 import quarris.qlib.api.registry.ContentLoader;
 import quarris.qlib.api.registry.registry.ItemRegistry;
-import quarris.qlib.mod.data.ModelDataHandler;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 
 public class ItemLoader extends ContentLoader<Item, ItemRegistry> {
 
-    @Override
-    protected void loadContent(String modId, String name, Item item) {
-        if (QLibApi.ITEMS.contains(item)) return;
-        if (item.getRegistryName() == null) {
-            item.setRegistryName(modId, name);
-        }
-        QLibApi.ITEMS.add(item);
+    public final Map<String, DeferredRegister<Item>> registers = new HashMap<>();
 
-        ItemRegistryHandler.HANDLERS.putIfAbsent(item, ItemRegistryHandler.get(item));
+    @Override
+    protected void loadContent(String modId, String name, Supplier<Item> itemSupplier) {
+        DeferredRegister<Item> registry = registers.computeIfAbsent(modId, id -> DeferredRegister.create(ForgeRegistries.ITEMS, id));
+        registry.register(name, itemSupplier);
+
+        //ItemRegistryHandler.HANDLERS.putIfAbsent(itemSupplier, ItemRegistryHandler.get(itemSupplier));
     }
 
     @Override

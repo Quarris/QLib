@@ -10,17 +10,16 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Supplier;
 
 @SuppressWarnings("unchecked cast")
 public abstract class ContentLoader<Content, Registry extends Annotation> {
 
     public void load() {
-        List<Class<?>> registryClasses = new ArrayList<>();
-        try {
-            registryClasses = ReflectionHelper.getClassesAnnotatedBy(this.getRegistryClass());
-        } catch (ClassNotFoundException e) {
-            QLibApi.LOGGER.error("Error during registering content", e.getCause());
-        }
+        List<Class<?>> registryClasses = ReflectionHelper.getClassesAnnotatedBy(
+                this.getRegistryClass(),
+                e -> QLibApi.LOGGER.error("Error during registering content", e.getCause())
+        );
 
         if (registryClasses.isEmpty())
             return;
@@ -28,7 +27,7 @@ public abstract class ContentLoader<Content, Registry extends Annotation> {
         QLibApi.LOGGER.info("Loading content from {} classes for type {}", registryClasses.size(), this.getContentClass().getName());
 
         for (Class<?> registryClass : registryClasses) {
-            Registry annotation = (Registry) registryClass.getDeclaredAnnotation(this.getRegistryClass());
+            Registry annotation = registryClass.getDeclaredAnnotation(this.getRegistryClass());
             String modId;
             try {
                 modId = (String) this.getRegistryClass().getMethod("value").invoke(annotation);
@@ -43,7 +42,7 @@ public abstract class ContentLoader<Content, Registry extends Annotation> {
                             Content content = (Content) field.get(null);
                             if (content == null) continue;
                             ModHelper.switchActiveContainer(modId);
-                            this.loadContent(modId, field.getName().toLowerCase(Locale.ROOT), content);
+                            this.loadContent(modId, field.getName().toLowerCase(Locale.ROOT), () -> content);
                         } catch (IllegalAccessException ignored) {
                         }
                     }
@@ -54,7 +53,7 @@ public abstract class ContentLoader<Content, Registry extends Annotation> {
         ModHelper.switchActiveContainer(QLibApi.MODID);
     }
 
-    protected abstract void loadContent(String modId, String name, Content item);
+    protected abstract void loadContent(String modId, String name, Supplier<Content> item);
 
     protected abstract Class<Content> getContentClass();
 

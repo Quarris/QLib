@@ -1,6 +1,6 @@
 package quarris.qlib.api.client.render;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import quarris.qlib.api.QLibApi;
 import quarris.qlib.api.util.math.Point;
 import quarris.qlib.api.util.math.Rectangle;

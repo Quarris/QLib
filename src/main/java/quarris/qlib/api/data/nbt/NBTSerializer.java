@@ -1,7 +1,7 @@
 package quarris.qlib.api.data.nbt;
 
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.StringNBT;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraftforge.common.util.INBTSerializable;
 import quarris.qlib.api.QLibApi;
 import quarris.qlib.api.data.nbt.converters.*;
@@ -10,12 +10,12 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings({"unchecked", "ConstantConditions"})
+@SuppressWarnings({"unchecked", "ConstantConditions", "rawtypes"})
 public class NBTSerializer {
 
-    public Map<Class, NBTConverter> CONVERTERS = new HashMap<>();
+    public Map<Class, TagConverter> CONVERTERS = new HashMap<>();
 
-    public void addConverter(NBTConverter converter) {
+    public void addConverter(TagConverter converter) {
         for (Class clazz : converter.getTargetClasses()) {
             CONVERTERS.put(clazz, converter);
         }
@@ -23,28 +23,30 @@ public class NBTSerializer {
 
     public void registerDefaultConverters() {
         QLibApi.LOGGER.info("Adding NBT Converters");
-        this.addConverter(new LongNBTConverter());
-        this.addConverter(new BooleanNBTConverter());
-        this.addConverter(new ByteNBTConverter());
-        this.addConverter(new DoubleNBTConverter());
-        this.addConverter(new FloatNBTConverter());
-        this.addConverter(new IntegerNBTConverter());
-        this.addConverter(new ObjectNBTConverter());
-        this.addConverter(new StringNBTConverter());
-        this.addConverter(new NBTSerializableNBTConverter());
+        this.addConverter(new LongTagConverter());
+        this.addConverter(new BooleanTagConverter());
+        this.addConverter(new ByteTagConverter());
+        this.addConverter(new DoubleTagConverter());
+        this.addConverter(new FloatTagConverter());
+        this.addConverter(new IntegerTagConverter());
+        this.addConverter(new StringTagConverter());
+        this.addConverter(new ObjectTagConverter());
+
+        this.addConverter(new NBTSerializableTagConverter());
+        this.addConverter(new FluidStackTagConverter());
     }
 
-    public INBT serialize(Object value) {
+    public Tag serialize(Object value) {
         return this.serialize(value, null);
     }
 
-    public INBT serialize(Object value, Class clazz) {
+    public Tag serialize(Object value, Class clazz) {
         if (value == null)
-            return StringNBT.valueOf("null");
+            return StringTag.valueOf("null");
 
-        NBTConverter converter = this.getConverter(clazz);
+        TagConverter converter = this.getConverter(clazz);
         if (converter == null) {
-            if (value instanceof INBTSerializable) {
+            if (value instanceof INBTSerializable<?>) {
                 converter = this.getConverter(INBTSerializable.class);
             } else {
                 converter = this.getConverter(value.getClass());
@@ -59,11 +61,11 @@ public class NBTSerializer {
         return converter.serialize(value);
     }
 
-    public <T> T deserialize(Class clazz, @Nullable T existing, INBT nbt) {
-        if (nbt instanceof StringNBT && nbt.getString().equals("null"))
+    public <T> T deserialize(Class clazz, @Nullable T existing, Tag nbt) {
+        if (nbt instanceof StringTag && nbt.getAsString().equals("null"))
             return null;
 
-        NBTConverter<T, INBT> converter = this.getConverter(clazz);
+        TagConverter<T, Tag> converter = this.getConverter(clazz);
 
         if (converter == null) {
             converter = this.getConverter(Object.class);
@@ -74,7 +76,7 @@ public class NBTSerializer {
     }
 
     @Nullable
-    public NBTConverter getConverter(Class clazz) {
+    public TagConverter getConverter(Class clazz) {
         return CONVERTERS.get(clazz);
     }
 }

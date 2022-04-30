@@ -1,10 +1,11 @@
 package quarris.qlib.api.client.render;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import quarris.qlib.api.QLibApi;
 import quarris.qlib.api.util.math.Point;
 import quarris.qlib.api.util.math.Rectangle;
 
@@ -49,22 +50,24 @@ public class NinePatch {
      *
      * @param dimensions The size of the patch to draw it at. Setting this smaller than the texture (or negative) will make the rendering look weird
      */
-    public void render(Rectangle dimensions) {
-        Minecraft.getInstance().textureManager.bindTexture(this.texture);
+    public void render(PoseStack matrix, Rectangle dimensions) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, this.texture);
 
         int paddingWidth = dimensions.width - padding.getWidth();
         int paddingHeight = dimensions.height - padding.getHeight();
-        Point left = dimensions.getPosition();
-        RenderHelper.blit(new Rectangle(left.x, left.y, padding.left, padding.top), patches[0], textureSize);
-        RenderHelper.blit(new Rectangle(left.x + padding.left, left.y, paddingWidth, padding.top), patches[1], textureSize);
-        RenderHelper.blit(new Rectangle(left.x + padding.left + paddingWidth, left.y, padding.right, padding.top), patches[2], textureSize);
+        Point left = dimensions.position();
+        RenderHelper.blit(matrix, new Rectangle(left.x, left.y, padding.left, padding.top), patches[0], textureSize);
+        RenderHelper.blit(matrix, new Rectangle(left.x + padding.left, left.y, paddingWidth, padding.top), patches[1], textureSize);
+        RenderHelper.blit(matrix, new Rectangle(left.x + padding.left + paddingWidth, left.y, padding.right, padding.top), patches[2], textureSize);
         left = left.add(0, padding.top);
-        RenderHelper.blit(new Rectangle(left.x, left.y, padding.left, paddingHeight), patches[3], textureSize);
-        RenderHelper.blit(new Rectangle(left.x + padding.left, left.y, paddingWidth, paddingHeight), patches[4], textureSize);
-        RenderHelper.blit(new Rectangle(left.x + padding.left + paddingWidth, left.y, padding.right, paddingHeight), patches[5], textureSize);
+        RenderHelper.blit(matrix, new Rectangle(left.x, left.y, padding.left, paddingHeight), patches[3], textureSize);
+        RenderHelper.blit(matrix, new Rectangle(left.x + padding.left, left.y, paddingWidth, paddingHeight), patches[4], textureSize);
+        RenderHelper.blit(matrix, new Rectangle(left.x + padding.left + paddingWidth, left.y, padding.right, paddingHeight), patches[5], textureSize);
         left = left.add(0, paddingHeight);
-        RenderHelper.blit(new Rectangle(left.x, left.y, padding.left, padding.bottom), patches[6], textureSize);
-        RenderHelper.blit(new Rectangle(left.x + padding.left, left.y, paddingWidth, padding.bottom), patches[7], textureSize);
-        RenderHelper.blit(new Rectangle(left.x + padding.left + paddingWidth, left.y, padding.right, padding.bottom), patches[8], textureSize);
+        RenderHelper.blit(matrix, new Rectangle(left.x, left.y, padding.left, padding.bottom), patches[6], textureSize);
+        RenderHelper.blit(matrix, new Rectangle(left.x + padding.left, left.y, paddingWidth, padding.bottom), patches[7], textureSize);
+        RenderHelper.blit(matrix, new Rectangle(left.x + padding.left + paddingWidth, left.y, padding.right, padding.bottom), patches[8], textureSize);
     }
 }

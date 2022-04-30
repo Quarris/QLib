@@ -1,9 +1,9 @@
 package quarris.qlib.api.data.model;
 
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import quarris.qlib.api.QLibApi;
 import quarris.qlib.api.data.ItemRegistryHandler;
 
