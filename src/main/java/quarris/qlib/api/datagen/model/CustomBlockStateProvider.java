@@ -1,4 +1,4 @@
-package quarris.qlib.api.data.model;
+package quarris.qlib.api.datagen.model;
 
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;

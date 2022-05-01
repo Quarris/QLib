@@ -1,4 +1,4 @@
-package quarris.qlib.api.client.render;
+package quarris.qlib.api.client.util;
 
 public class Padding {
     public final int left, right, top, bottom;

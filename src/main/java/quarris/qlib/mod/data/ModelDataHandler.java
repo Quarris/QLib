@@ -5,8 +5,8 @@ import com.google.common.collect.ListMultimap;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import quarris.qlib.api.data.BlockRegistryHandler;
 import quarris.qlib.api.data.ItemRegistryHandler;
-import quarris.qlib.api.data.model.CustomBlockStateProvider;
-import quarris.qlib.api.data.model.CustomItemModelProvider;
+import quarris.qlib.api.datagen.model.CustomBlockStateProvider;
+import quarris.qlib.api.datagen.model.CustomItemModelProvider;
 
 public class ModelDataHandler {
 

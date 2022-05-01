@@ -1,4 +1,4 @@
-package quarris.qlib.api.client.render;
+package quarris.qlib.api.client.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import quarris.qlib.api.client.helper.RenderHelper;
 import quarris.qlib.api.util.math.Point;
 import quarris.qlib.api.util.math.Rectangle;
 

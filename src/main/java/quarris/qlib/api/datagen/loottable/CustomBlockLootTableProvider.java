@@ -1,10 +1,6 @@
-package quarris.qlib.api.data.loottable;
+package quarris.qlib.api.datagen.loottable;
 
 import net.minecraft.data.DataGenerator;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.storage.loot.LootTable;
-import quarris.qlib.api.QLibApi;
-import quarris.qlib.api.data.BlockRegistryHandler;
 
 public class CustomBlockLootTableProvider extends BlockLootTableProvider {
 

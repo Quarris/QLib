@@ -5,8 +5,8 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
-import quarris.qlib.api.client.render.NinePatch;
-import quarris.qlib.api.client.render.NinePatches;
+import quarris.qlib.api.client.util.NinePatch;
+import quarris.qlib.api.client.util.NinePatches;
 import quarris.qlib.api.container.TileContainerMenu;
 import quarris.qlib.api.util.math.Rectangle;
 

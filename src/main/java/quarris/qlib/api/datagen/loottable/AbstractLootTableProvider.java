@@ -1,4 +1,4 @@
-package quarris.qlib.api.data.loottable;
+package quarris.qlib.api.datagen.loottable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

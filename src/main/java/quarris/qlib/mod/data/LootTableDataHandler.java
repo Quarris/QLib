@@ -3,7 +3,7 @@ package quarris.qlib.mod.data;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
-import quarris.qlib.api.data.loottable.CustomBlockLootTableProvider;
+import quarris.qlib.api.datagen.loottable.CustomBlockLootTableProvider;
 
 import java.util.ArrayList;
 import java.util.List;

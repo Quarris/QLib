@@ -4,8 +4,8 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
-import quarris.qlib.api.data.loottable.CustomBlockLootTableProvider;
-import quarris.qlib.api.data.model.CustomBlockStateProvider;
+import quarris.qlib.api.datagen.loottable.CustomBlockLootTableProvider;
+import quarris.qlib.api.datagen.model.CustomBlockStateProvider;
 
 import java.util.HashMap;
 import java.util.Map;

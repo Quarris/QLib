@@ -1,4 +1,4 @@
-package quarris.qlib.api.data.model;
+package quarris.qlib.api.datagen.model;
 
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelProvider;

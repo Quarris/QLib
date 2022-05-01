@@ -1,4 +1,4 @@
-package quarris.qlib.api.client.render;
+package quarris.qlib.api.client.helper;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiComponent;
@@ -10,7 +10,7 @@ import quarris.qlib.api.util.math.Rectangle;
 @OnlyIn(Dist.CLIENT)
 public class RenderHelper {
 
-    protected static void blit(PoseStack matrix, Rectangle rect, Rectangle uv, Point texSize) {
+    public static void blit(PoseStack matrix, Rectangle rect, Rectangle uv, Point texSize) {
         GuiComponent.blit(matrix, rect.left(), rect.top(), rect.width, rect.height, uv.left(), uv.top(), uv.width, uv.height, texSize.x, texSize.y);
     }
 

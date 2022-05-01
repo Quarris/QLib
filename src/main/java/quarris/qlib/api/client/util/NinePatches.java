@@ -1,4 +1,4 @@
-package quarris.qlib.api.client.render;
+package quarris.qlib.api.client.util;
 
 import net.minecraft.resources.ResourceLocation;
 import quarris.qlib.api.QLibApi;

@@ -2,7 +2,7 @@ package quarris.qlib.api.data;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import quarris.qlib.api.data.model.CustomItemModelProvider;
+import quarris.qlib.api.datagen.model.CustomItemModelProvider;
 
 import java.util.HashMap;
 import java.util.Map;

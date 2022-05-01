@@ -1,4 +1,4 @@
-package quarris.qlib.api.data.loottable;
+package quarris.qlib.api.datagen.loottable;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
