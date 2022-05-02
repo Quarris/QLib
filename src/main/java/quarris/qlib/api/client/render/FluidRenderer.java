@@ -21,7 +21,7 @@ public class FluidRenderer {
     public static void renderFluidFace(Level level, BlockPos blockPos, PoseStack matrix, FluidStack stack, VertexConsumer buffer, Direction dir, Vector3d center, float radius, int packedLight) {
         matrix.pushPose();
         Fluid fluid = stack.getFluid();
-        int[] colors = ColorHelper.getColori(fluid.getAttributes().getColor(level, blockPos));
+        int[] colors = ColorHelper.fromColori(fluid.getAttributes().getColor(level, blockPos));
         TextureAtlasSprite sprite = getFluidSprites(level, blockPos, fluid.getAttributes())[0];
         matrix.translate(center.x, center.y, center.z);
         float minU = sprite.getU0();
