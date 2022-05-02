@@ -15,14 +15,6 @@ public class BasicBlockEntity extends BlockEntity {
         super(type, pos, state);
     }
 
-    /*public void readFromNBT(CompoundTag nbt) {
-        QLibApi.SERIALIZER.deserialize(this.getClass(), this, nbt.get("QLibTileData"));
-    }
-
-    public void writeToNBT(CompoundTag nbt) {
-        nbt.put("QLibTileData", QLibApi.SERIALIZER.serialize(this, Object.class));
-    }*/
-
     @Override
     public final ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
