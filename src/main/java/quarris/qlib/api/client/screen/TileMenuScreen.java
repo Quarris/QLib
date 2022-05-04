@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import quarris.qlib.api.client.util.NinePatch;
 import quarris.qlib.api.client.util.NinePatches;
-import quarris.qlib.api.container.TileContainerMenu;
+import quarris.qlib.api.content.menu.TileContainerMenu;
 import quarris.qlib.api.util.math.Rectangle;
 
 public class TileMenuScreen<T extends TileContainerMenu> extends AbstractContainerScreen<T> {

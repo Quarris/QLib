@@ -1,4 +1,4 @@
-package quarris.qlib.api.container;
+package quarris.qlib.api.content.menu;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;

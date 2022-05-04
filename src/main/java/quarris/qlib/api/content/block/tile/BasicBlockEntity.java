@@ -1,4 +1,4 @@
-package quarris.qlib.api.block.tile;
+package quarris.qlib.api.content.block.tile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

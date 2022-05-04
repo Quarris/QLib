@@ -1,4 +1,4 @@
-package quarris.qlib.api.block;
+package quarris.qlib.api.content.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
